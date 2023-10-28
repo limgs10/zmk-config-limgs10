@@ -58,7 +58,7 @@
         symbol {
             label = "Sym";
             bindings = <
-&trans  &sk LEFT_CONTROL  &kp AMPERSAND    &kp PERCENT  &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &kp EQUAL         &kp PLUS              &kp MINUS              &kp UNDERSCORE     &kp TILDE     &trans
+&trans  &sk LEFT_CONTROL  &kp AMPERSAND    &kp ASTERISK &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &kp EQUAL         &kp PLUS              &kp MINUS              &kp UNDERSCORE     &kp TILDE     &trans
 &trans  &sk LEFT_ALT      &kp DOLLAR       &kp PERCENT  &kp CARET             &kp GRAVE              &kp LEFT          &kp DOWN              &kp UP_ARROW           &kp RIGHT          &kp COLON     &trans
 &trans  &sk LEFT_GUI      &kp EXCLAMATION  &kp AT_SIGN  &kp HASH              &kp TILDE              &kp LEFT_BRACKET  &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &kp RIGHT_BRACKET  &kp QUESTION  &trans
 &trans  &trans            &trans           &trans       &trans                &trans                  &trans             &trans                &trans                 &trans             &trans        &trans
