@@ -11,8 +11,8 @@
 
 #define QWERTY_BASE 1
 
-//#define TBLE_ORTHO   1
-//#define TBLE_MIT     1
+// #define TBLE_ORTHO   1
+// #define TBLE_MIT     1
 #define TBLE_DUAL_2U 1
 
 #define NUM_L 1
@@ -55,17 +55,6 @@
 	};
     };
 
-// Conditional layer only when we have less thumb keys
-#ifdef TBLE_DUAL_2U
-    cond_layers {
-        compatible = "zmk,conditional-layers";
-	tri {
-	    if-layers = <NUM_L NAV_L>;
-	    then-layer = <SYM_L>;
-        };
-    };
-#endif
-
     keymap {
         compatible = "zmk,keymap";
 
@@ -73,20 +62,20 @@
             label = "Base";
             bindings = <
 #ifdef QWERTY_BASE
- &kp TAB         &kp Q     &kp W     &kp E  &kp R      &kp T  &kp Y      &kp U  &kp I      &kp O    &kp P     &kp BSPC
-&kp CLCK        &kp A     &kp S     &kp D  &kp F      &kp G  &kp H      &kp J  &kp K      &kp L    &kp SEMI  &kp SQT
-&kp LEFT_SHIFT  &kp Z     &kp X     &kp C  &kp V      &kp B  &kp N      &kp M  &kp COMMA  &kp DOT  &kp FSLH  &mo RSH_L
+ &kp ESC    &kp Q      &kp W      &kp E       &kp R          &kp T          &kp Y            &kp U          &kp I       &kp O      &kp P         &kp BKSP
+ &kp TAB    &kp A      &kp S      &kp D       &kp F          &kp G          &kp H            &kp J          &kp K       &kp L      &kp SEMI      &kp QUOT
+ &kp LSHFT  &kp Z      &kp X      &kp C       &kp V          &kp B          &kp N            &kp M          &kp COMMA   &kp DOT    &kp FSLH      &mo RSH_L
 #else
  &kp ESC    &kp Q      &kp W      &kp F       &kp P          &kp B          &kp J            &kp L          &kp U       &kp Y      &kp QUOT      &kp BKSP
  &kp TAB    &kp A      &kp R      &kp S       &kp T          &kp G          &kp M            &kp N          &kp E       &kp I      &kp O         &kp QUOT
  &kp LSHFT  &kp Z      &kp X      &kp C       &kp D          &kp V          &kp K            &kp H          &kp COMMA   &kp DOT    &kp SEMI      &kp RET
 #endif
 #ifdef TBLE_DUAL_2U
- &kp LCTRL       &kp LGUI  &kp LALT  &mo SYS_L  &kp ENTER         &kp SPACE         &kp RALT   &mo NUM_L    &mo FUN_L     &kp RCTRL
+ &kp LCTRL  &kp LGUI   &kp LALT   &mo SYS_L         &kp ENTER                        &kp SPACE                &kp LALT   &mo NUM_L   &mo FUN_L      &kp RCTRL
 #elif defined(TBLE_MIT)
- &kp LCTRL  &mo SYM_L   &kp LGUI  &kp LALT    &mo NUM_L          &kp SPACE                   &mo NUM_L      &kp LEFT    &kp UP     &kp DOWN      &kp RIGHT
+ &kp LCTRL  &mo RSH_L   &kp LGUI  &kp LALT    &mo NUM_L          &kp SPACE                   &mo FUN_L      &kp LEFT    &kp UP     &kp DOWN      &kp RIGHT
 #else
- &kp LCTRL  &mo SYM_L   &kp LGUI  &kp LALT    &mo NUM_L      &kp SPACE      &kp RET          &mo NUM_L      &kp LEFT    &kp UP     &kp DOWN      &kp RIGHT
+ &kp LCTRL  &mo RSH_L   &kp LGUI  &kp LALT    &mo NUM_L      &kp SPACE      &kp RET          &mo FUN_L      &kp LEFT    &kp UP     &kp DOWN      &kp RIGHT
 #endif
             >;
         };
@@ -98,11 +87,11 @@
 &trans     &none   &none   &none   &none   &none   &none   &kp MINUS  &kp EQUAL  &kp LBKT  &kp RBKT  &kp NUBS
 &trans     &none   &none   &none   &none   &none   &none   &none      &none      &none     &none     &trans
 #ifdef TBLE_DUAL_2U
-&trans     &trans  &trans  &trans  &trans          &trans             &trans     &trans    &trans    &trans
+&trans  &trans        &trans     &trans              &trans                    &trans       &trans         &trans &trans &trans
 #elif defined(TBLE_MIT)
- &trans  &trans   &trans  &trans    &trans          &trans                   &trans      &trans    &trans     &trans      &trans
+&trans  &trans        &trans     &trans      &trans                &trans             &trans      &trans   &trans &trans &trans
 #else
- &trans  &trans   &trans  &trans    &trans      &trans      &trans          &trans      &trans    &trans     &trans      &trans
+&trans  &trans        &trans     &trans      &trans          &trans       &trans    &trans  &trans         &trans &trans &trans
 #endif
             >;
         };
@@ -114,11 +103,11 @@
 &trans   &kp LEFT  &kp DOWN  &kp RIGHT  &kp INS    &kp HOME  &kp PG_UP        &kp F5  &kp F6   &kp F7   &kp F8   &trans
 &trans   &none     &none     &none      &kp DEL    &kp END   &kp PG_DN        &kp F9  &kp F10  &kp F11  &kp F12  &trans
 #ifdef TBLE_DUAL_2U
-&trans     &trans  &trans  &trans  &trans          &trans             &trans     &trans    &trans    &trans
+&trans  &trans       &trans     &trans              &trans                 &trans            &trans         &trans &trans &trans
 #elif defined(TBLE_MIT)
- &trans  &trans   &trans  &trans    &trans          &trans                   &trans      &trans    &trans     &trans      &trans
+&trans  &trans       &trans     &trans      &trans           &trans            &trans        &trans      &trans &trans &trans
 #else
- &trans  &trans   &trans  &trans    &trans      &trans      &trans          &trans      &trans    &trans     &trans      &trans
+&trans  &trans       &trans     &trans      &trans    &trans         &trans     &trans        &trans      &trans &trans &trans
 #endif
             >;
         };
@@ -130,27 +119,11 @@
 &trans     &none     &none   &none     &none     &none      &none      &kp UNDER  &kp PLUS  &kp LBRC  &kp RBRC   &kp PIPE
 &trans     &none     &none   &none     &none     &none      &none      &none      &kp LT    &kp GT    &kp QMARK  &trans
 #ifdef TBLE_DUAL_2U
-&trans     &trans  &trans  &trans  &trans          &trans             &trans     &trans    &trans    &trans
+&trans &trans        &trans     &trans                &trans                    &trans       &trans         &trans &trans &trans
 #elif defined(TBLE_MIT)
- &trans  &trans   &trans  &trans    &trans          &trans                   &trans      &trans    &trans     &trans      &trans
+&trans &trans        &trans     &trans        &trans                &trans             &trans      &trans   &trans &trans &trans
 #else
- &trans  &trans   &trans  &trans    &trans      &trans      &trans          &trans      &trans    &trans     &trans      &trans
-#endif
-            >;
-        };
-
-        sys_layer {
-            label = "Sys";
-            bindings = <
-&trans  &none   &none   &none   &none   &none       &none   &none  &none   &out OUT_TOG  &ext_power EP_TOG  &trans
-&trans  &none   &none   &none   &none   &none       &none   &none  &none   &none         &none              &trans
-&trans  &none   &none   &none   &none   &bt BT_NXT  &none   &none  &none   &none         &none              &trans
-#ifdef TBLE_DUAL_2U
-&trans     &trans  &trans  &trans  &trans          &trans             &trans     &trans    &trans    &trans
-#elif defined(TBLE_MIT)
- &trans  &trans   &trans  &trans    &trans          &trans                   &trans      &trans    &trans     &trans      &trans
-#else
- &trans  &trans   &trans  &trans    &trans      &trans      &trans          &trans      &trans    &trans     &trans      &trans
+&trans &trans        &trans     &trans        &trans          &trans       &trans    &trans  &trans         &trans &trans &trans
 #endif
             >;
         };
