@@ -64,14 +64,14 @@
 #ifdef QWERTY_BASE
  &kp ESC    &kp Q      &kp W      &kp E       &kp R          &kp T          &kp Y            &kp U          &kp I       &kp O      &kp P         &kp BKSP
  &kp TAB    &kp A      &kp S      &kp D       &kp F          &kp G          &kp H            &kp J          &kp K       &kp L      &kp SEMI      &kp QUOT
- &kp LSHFT  &kp Z      &kp X      &kp C       &kp V          &kp B          &kp N            &kp M          &kp COMMA   &kp DOT    &kp FSLH      &kp RET
+ &kp LSHFT  &kp Z      &kp X      &kp C       &kp V          &kp B          &kp N            &kp M          &kp COMMA   &kp DOT    &kp FSLH      &mo RSH_L
 #else
  &kp ESC    &kp Q      &kp W      &kp F       &kp P          &kp B          &kp J            &kp L          &kp U       &kp Y      &kp QUOT      &kp BKSP
  &kp TAB    &kp A      &kp R      &kp S       &kp T          &kp G          &kp M            &kp N          &kp E       &kp I      &kp O         &kp QUOT
  &kp LSHFT  &kp Z      &kp X      &kp C       &kp D          &kp V          &kp K            &kp H          &kp COMMA   &kp DOT    &kp SEMI      &kp RET
 #endif
 #ifdef TBLE_DUAL_2U
- &kp LCTRL  &kp LGUI   &kp LALT   &mo NUM_L         &shifty                        &kp SPACE                &mo FUN_L   &kp LALT   &kp RGUI      &kp RSHIFT
+ &kp LCTRL  &kp LGUI   &kp LALT   &mo SYS_L         &kp ENTER                        &kp SPACE                &kp LALT   &mo NUM_L   &mo FUN_L      &kp RCTRL
 #elif defined(TBLE_MIT)
  &kp LCTRL  &mo RSH_L   &kp LGUI  &kp LALT    &mo NUM_L          &kp SPACE                   &mo FUN_L      &kp LEFT    &kp UP     &kp DOWN      &kp RIGHT
 #else
@@ -83,9 +83,9 @@
         num_layer {
             label = "Num";
             bindings = <
-&bt BT_CLR &trans     &trans     &trans      &trans          &trans       &trans     &trans         &trans      &trans     &trans     &kp DEL
-&trans     &trans     &trans     &trans      &trans          &trans       &trans     &kp LEFT       &kp DOWN    &kp UP     &kp RIGHT  &trans
-&trans     &bt BT(0)  &bt BT(1)  &bt BT(2)   &bt BT(3)       &bt BT(4)    &trans     &kp HOME       &kp PG_DN   &kp PG_UP  &kp END    &trans
+&kp GRAVE  &kp N1  &kp N2  &kp N3  &kp N4  &kp N5  &kp N6  &kp N7     &kp N8     &kp N9    &kp N0    &trans
+&trans     &none   &none   &none   &none   &none   &none   &kp MINUS  &kp EQUAL  &kp LBKT  &kp RBKT  &kp NUBS
+&trans     &none   &none   &none   &none   &none   &none   &none      &none      &none     &none     &trans
 #ifdef TBLE_DUAL_2U
 &trans  &trans        &trans     &trans              &trans                    &trans       &trans         &trans &trans &trans
 #elif defined(TBLE_MIT)
