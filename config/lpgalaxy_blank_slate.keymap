@@ -15,9 +15,9 @@
 // #define TBLE_MIT     1
 #define TBLE_DUAL_2U 1
 
-#define NAV_L 1
-#define NUM_L 2
-#define SYM_L 3
+#define NUM_L 1
+#define FUN_L 2
+#define RSH_L 3
 #define SYS_L 4
 
 // Using layer taps on thumbs, having quick tap as well helps w/ repeating space/backspace
@@ -55,17 +55,6 @@
 	};
     };
 
-// Conditional layer only when we have less thumb keys
-#ifdef TBLE_DUAL_2U
-    cond_layers {
-        compatible = "zmk,conditional-layers";
-	tri {
-	    if-layers = <NUM_L NAV_L>;
-	    then-layer = <SYM_L>;
-        };
-    };
-#endif
-
     keymap {
         compatible = "zmk,keymap";
 
@@ -82,17 +71,17 @@
  &kp LSHFT  &kp Z      &kp X      &kp C       &kp D          &kp V          &kp K            &kp H          &kp COMMA   &kp DOT    &kp SEMI      &kp RET
 #endif
 #ifdef TBLE_DUAL_2U
- &kp LCTRL  &kp LGUI   &kp LALT   &mo NAV_L         &shifty                        &kp SPACE                &mo NUM_L   &kp LALT   &kp RGUI      &kp RSHIFT
+ &kp LCTRL  &kp LGUI   &kp LALT   &mo NUM_L         &shifty                        &kp SPACE                &mo FUN_L   &kp LALT   &kp RGUI      &kp RSHIFT
 #elif defined(TBLE_MIT)
- &kp LCTRL  &mo SYM_L   &kp LGUI  &kp LALT    &mo NAV_L          &kp SPACE                   &mo NUM_L      &kp LEFT    &kp UP     &kp DOWN      &kp RIGHT
+ &kp LCTRL  &mo RSH_L   &kp LGUI  &kp LALT    &mo NUM_L          &kp SPACE                   &mo FUN_L      &kp LEFT    &kp UP     &kp DOWN      &kp RIGHT
 #else
- &kp LCTRL  &mo SYM_L   &kp LGUI  &kp LALT    &mo NAV_L      &kp SPACE      &kp RET          &mo NUM_L      &kp LEFT    &kp UP     &kp DOWN      &kp RIGHT
+ &kp LCTRL  &mo RSH_L   &kp LGUI  &kp LALT    &mo NUM_L      &kp SPACE      &kp RET          &mo FUN_L      &kp LEFT    &kp UP     &kp DOWN      &kp RIGHT
 #endif
             >;
         };
 
-        nav_layer {
-            label = "Nav";
+        num_layer {
+            label = "Num";
             bindings = <
 &bt BT_CLR &trans     &trans     &trans      &trans          &trans       &trans     &trans         &trans      &trans     &trans     &kp DEL
 &trans     &trans     &trans     &trans      &trans          &trans       &trans     &kp LEFT       &kp DOWN    &kp UP     &kp RIGHT  &trans
@@ -107,8 +96,8 @@
             >;
         };
 
-        num_layer {
-            label = "Num";
+        fun_layer {
+            label = "Fun";
             bindings = <
 &trans     &kp LBKT   &trans &trans &trans    &kp RBKT    &kp C_PREV    &kp N7     &kp N8      &kp N9       &trans     &trans
 &trans     &kp MINUS  &trans &trans &trans    &kp EQUAL   &kp C_NEXT    &kp N4     &kp N5      &kp N6       &trans     &trans
@@ -123,8 +112,8 @@
             >;
         };
 
-        sym_layer {
-            label = "Sym";
+        rsh_layer {
+            label = "Rsh";
             bindings = <
 &trans     &kp LBRC   &kp AMPS   &kp STAR    &kp LPAR     &kp RBRC     &trans     &trans    &trans       &trans       &trans     &bootloader
 &trans     &kp COLON  &kp DLLR   &kp PRCNT   &kp CARET    &kp PLUS     &trans     &trans    &trans       &trans       &trans     &trans
