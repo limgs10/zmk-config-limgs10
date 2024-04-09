@@ -18,6 +18,7 @@
 #define NAV_L 1
 #define NUM_L 2
 #define SYM_L 3
+#define SYS_L 4
 
 // Using layer taps on thumbs, having quick tap as well helps w/ repeating space/backspace
 &lt { quick_tap_ms = <200>; };
