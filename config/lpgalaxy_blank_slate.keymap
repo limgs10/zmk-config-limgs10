@@ -5,66 +5,56 @@
  */
 
 #include <behaviors.dtsi>
-#include <dt-bindings/zmk/bt.h>
-#include <dt-bindings/zmk/ext_power.h>
 #include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/outputs.h>
+
+#define QWERTY_BASE 1
+
+//#define TBLE_ORTHO   1
+//#define TBLE_MIT     1
+#define TBLE_DUAL_2U 1
+
+#define NUM_L 1
+#define FUN_L 2
+#define RSH_L 3
+#define SYS_L 4
+
+// Using layer taps on thumbs, having quick tap as well helps w/ repeating space/backspace
+&lt { quick_tap_ms = <200>; };
 
 #define BT(n) BT_SEL n
 
-// Using layer taps on thumbs, having quick tap as well helps w/ repeating space/backspace
-
-&lt { quick_tap_ms = <200>; };
-
 / {
-    chosen { zmk,matrix_transform = &ortho_transform; };
+    chosen {
+       zmk,matrix_transform =
+#ifdef TBLE_DUAL_2U
+                       &dual_2u_transform;
+#elif defined(TBLE_MIT)
+                       &mit_transform;
+#else
+                       &ortho_transform;
+#endif
+    };
 
     macros {
-        ZMK_MACRO(thumbs_up,
-
-        wait-ms = <1>;
-        tap-ms = <5>;
-        bindings = <&kp PLUS &kp COLON &kp PLUS &kp N1 &kp COLON &kp RET>;
-
-        )
+      ZMK_MACRO(thumbs_up,
+		wait-ms = <1>;
+		tap-ms = <5>;
+                bindings = <&kp PLUS &kp COLON &kp PLUS &kp N1 &kp COLON &kp RET>;
+		)
     };
-
+    
     tap_dances {
-        shifty: shift_caps_word {
-            compatible = "zmk,behavior-tap-dance";
-            label = "TD_SHIFTY";
-            #binding-cells = <0>;
-            tapping-term-ms = <150>;
-            bindings = <&kp LSHFT>, <&caps_word>;
-        };
-
-        mt_tp: mt_tp {
-            compatible = "zmk,behavior-hold-tap";
-            label = "MT_TP";
-            bindings = <&kp>, <&kp>;
-
-            #binding-cells = <2>;
-            flavor = "tap-preferred";
-            require-prior-idle-ms = <0>;
-            quick-tap-ms = <0>;
-            tapping-term-ms = <150>;
-        };
-
-        mt_rpi: mt_rpi {
-            compatible = "zmk,behavior-hold-tap";
-            label = "MT_RPI";
-            bindings = <&kp>, <&kp>;
-
-            #binding-cells = <2>;
-            flavor = "tap-preferred";
-            require-prior-idle-ms = <125>;
-            quick-tap-ms = <0>;
-            tapping-term-ms = <150>;
-        };
+    	shifty: shift_caps_word {
+		compatible = "zmk,behavior-tap-dance";
+		label = "TD_SHIFTY";
+		#binding-cells = <0>;
+		tapping-term-ms = <150>;
+		bindings = <&kp LSHFT>, <&caps_word>;
+	};
     };
 
-    behaviors {
-    };
 
     keymap {
         compatible = "zmk,keymap";
@@ -72,50 +62,89 @@
         base_layer {
             label = "Base";
             bindings = <
-&kp TAB         &kp Q     &kp W     &kp E  &kp R      &kp T  &kp Y      &kp U  &kp I      &kp O    &kp P     &kp BSPC
+#ifdef QWERTY_BASE
+ &kp TAB         &kp Q     &kp W     &kp E  &kp R      &kp T  &kp Y      &kp U  &kp I      &kp O    &kp P     &kp BSPC
 &kp CLCK        &kp A     &kp S     &kp D  &kp F      &kp G  &kp H      &kp J  &kp K      &kp L    &kp SEMI  &kp SQT
-&kp LEFT_SHIFT  &kp Z     &kp X     &kp C  &kp V      &kp B  &kp N      &kp M  &kp COMMA  &kp DOT  &kp FSLH  &mo 3
-&kp LCTRL       &kp LGUI  &kp LALT  &mo 4  &kp ENTER         &kp SPACE         &kp RALT   &mo 1    &mo 2     &kp RCTRL
+&kp LEFT_SHIFT  &kp Z     &kp X     &kp C  &kp V      &kp B  &kp N      &kp M  &kp COMMA  &kp DOT  &kp FSLH  &mo RSH_L
+#else
+ &kp ESC    &kp Q      &kp W      &kp F       &kp P          &kp B          &kp J            &kp L          &kp U       &kp Y      &kp QUOT      &kp BKSP
+ &kp TAB    &kp A      &kp R      &kp S       &kp T          &kp G          &kp M            &kp N          &kp E       &kp I      &kp O         &kp QUOT
+ &kp LSHFT  &kp Z      &kp X      &kp C       &kp D          &kp V          &kp K            &kp H          &kp COMMA   &kp DOT    &kp SEMI      &kp RET
+#endif
+#ifdef TBLE_DUAL_2U
+ &kp LCTRL       &kp LGUI  &kp LALT  &mo SYS_L  &kp ENTER         &kp SPACE         &kp RALT   &mo NUM_L    &mo FUN_L     &kp RCTRL
+#elif defined(TBLE_MIT)
+ &kp LCTRL  &mo SYM_L   &kp LGUI  &kp LALT    &mo NUM_L          &kp SPACE                   &mo NUM_L      &kp LEFT    &kp UP     &kp DOWN      &kp RIGHT
+#else
+ &kp LCTRL  &mo SYM_L   &kp LGUI  &kp LALT    &mo NUM_L      &kp SPACE      &kp RET          &mo NUM_L      &kp LEFT    &kp UP     &kp DOWN      &kp RIGHT
+#endif
             >;
         };
 
-        number {
+        num_layer {
             label = "Num";
             bindings = <
 &kp GRAVE  &kp N1  &kp N2  &kp N3  &kp N4  &kp N5  &kp N6  &kp N7     &kp N8     &kp N9    &kp N0    &trans
 &trans     &none   &none   &none   &none   &none   &none   &kp MINUS  &kp EQUAL  &kp LBKT  &kp RBKT  &kp NUBS
 &trans     &none   &none   &none   &none   &none   &none   &none      &none      &none     &none     &trans
+#ifdef TBLE_DUAL_2U
 &trans     &trans  &trans  &trans  &trans          &trans             &trans     &trans    &trans    &trans
+#elif defined(TBLE_MIT)
+ &trans  &trans   &trans  &trans    &trans          &trans                   &trans      &trans    &trans     &trans      &trans
+#else
+ &trans  &trans   &trans  &trans    &trans      &trans      &trans          &trans      &trans    &trans     &trans      &trans
+#endif
             >;
         };
 
-        function {
-            label = "Func";
+        fun_layer {
+            label = "Fun";
             bindings = <
 &kp ESC  &none     &kp UP    &none      &kp PSCRN  &kp SLCK  &kp PAUSE_BREAK  &kp F1  &kp F2   &kp F3   &kp F4   &kp DEL
 &trans   &kp LEFT  &kp DOWN  &kp RIGHT  &kp INS    &kp HOME  &kp PG_UP        &kp F5  &kp F6   &kp F7   &kp F8   &trans
 &trans   &none     &none     &none      &kp DEL    &kp END   &kp PG_DN        &kp F9  &kp F10  &kp F11  &kp F12  &trans
-&trans   &trans    &trans    &trans     &trans               &trans                   &trans   &trans   &trans   &trans
+#ifdef TBLE_DUAL_2U
+&trans     &trans  &trans  &trans  &trans          &trans             &trans     &trans    &trans    &trans
+#elif defined(TBLE_MIT)
+ &trans  &trans   &trans  &trans    &trans          &trans                   &trans      &trans    &trans     &trans      &trans
+#else
+ &trans  &trans   &trans  &trans    &trans      &trans      &trans          &trans      &trans    &trans     &trans      &trans
+#endif
             >;
         };
 
-        rightshift {
-            label = "Rshift";
+        rsh_layer {
+            label = "Rsh";
             bindings = <
 &kp TILDE  &kp EXCL  &kp AT  &kp HASH  &kp DLLR  &kp PRCNT  &kp CARET  &kp AMPS   &kp STAR  &kp LPAR  &kp RPAR   &none
 &trans     &none     &none   &none     &none     &none      &none      &kp UNDER  &kp PLUS  &kp LBRC  &kp RBRC   &kp PIPE
 &trans     &none     &none   &none     &none     &none      &none      &none      &kp LT    &kp GT    &kp QMARK  &trans
-&trans     &trans    &trans  &trans    &trans               &trans                &trans    &trans    &trans     &trans
+#ifdef TBLE_DUAL_2U
+&trans     &trans  &trans  &trans  &trans          &trans             &trans     &trans    &trans    &trans
+#elif defined(TBLE_MIT)
+ &trans  &trans   &trans  &trans    &trans          &trans                   &trans      &trans    &trans     &trans      &trans
+#else
+ &trans  &trans   &trans  &trans    &trans      &trans      &trans          &trans      &trans    &trans     &trans      &trans
+#endif
             >;
         };
 
-        system {
+        sys_layer {
+            label = "Sys";
             bindings = <
 &trans  &none   &none   &none   &none   &none       &none   &none  &none   &out OUT_TOG  &ext_power EP_TOG  &trans
 &trans  &none   &none   &none   &none   &none       &none   &none  &none   &none         &none              &trans
 &trans  &none   &none   &none   &none   &bt BT_NXT  &none   &none  &none   &none         &none              &trans
-&trans  &trans  &trans  &trans  &trans              &trans         &trans  &trans        &trans             &trans
+#ifdef TBLE_DUAL_2U
+&trans     &trans  &trans  &trans  &trans          &trans             &trans     &trans    &trans    &trans
+#elif defined(TBLE_MIT)
+ &trans  &trans   &trans  &trans    &trans          &trans                   &trans      &trans    &trans     &trans      &trans
+#else
+ &trans  &trans   &trans  &trans    &trans      &trans      &trans          &trans      &trans    &trans     &trans      &trans
+#endif
             >;
         };
+
+
     };
 };
