@@ -71,7 +71,7 @@
  &kp LSHFT  &kp Z      &kp X      &kp C       &kp D          &kp V          &kp K            &kp H          &kp COMMA   &kp DOT    &kp SEMI      &kp RET
 #endif
 #ifdef TBLE_DUAL_2U
- &kp LCTRL  &kp LGUI   &kp LALT   &bt BT_NXT         &kp ENTER                        &kp SPACE                &kp LALT   &mo NUM_L   &mo FUN_L      &kp RCTRL
+ &kp LCTRL  &kp LGUI   &kp LALT   &out OUT_TOG         &kp ENTER                        &kp SPACE                &kp LALT   &mo NUM_L   &mo FUN_L      &kp RCTRL
 #elif defined(TBLE_MIT)
  &kp LCTRL  &mo RSH_L   &kp LGUI  &kp LALT    &mo NUM_L          &kp SPACE                   &mo FUN_L      &kp LEFT    &kp UP     &kp DOWN      &kp RIGHT
 #else
