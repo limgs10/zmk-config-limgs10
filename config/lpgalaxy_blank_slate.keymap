@@ -27,13 +27,13 @@
 
 / {
     chosen {
-       zmk,matrix_transform =
+       zmk,physical-layout =
 #ifdef TBLE_DUAL_2U
-                       &dual_2u_transform;
+                       &layout_ortho_4x12_2x2u;
 #elif defined(TBLE_MIT)
-                       &mit_transform;
+                       &layout_ortho_4x12_1x2u;
 #else
-                       &ortho_transform;
+                       &layout_ortho_4x12_all1u;
 #endif
     };
 
@@ -119,7 +119,7 @@
 &trans     &none     &none   &none     &none     &none      &none      &kp UNDER  &kp PLUS  &kp LBRC  &kp RBRC   &kp PIPE
 &trans     &none     &none   &none     &none     &none      &none      &none      &kp LT    &kp GT    &kp QMARK  &trans
 #ifdef TBLE_DUAL_2U
-&trans &trans        &trans     &bt BT_CLR_ALL                &trans                    &trans       &trans         &trans &trans &trans
+&trans &trans        &trans     &bt BT_CLR                &trans                    &trans       &trans         &trans &trans &trans
 #elif defined(TBLE_MIT)
 &trans &trans        &trans     &trans        &trans                &trans             &trans      &trans   &trans &trans &trans
 #else
